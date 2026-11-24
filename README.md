@@ -2,6 +2,27 @@
 
 HapticBridge brings DualSense haptics from compatible Windows games to supported Android controllers using Apollo and Artemis. See the [project page](https://xuhk12426.github.io/HapticBridge/) for setup and compatibility information.
 
+## Compatibility
+
+### Games
+
+| Windows game | Hands-on result |
+| --- | --- |
+| DEATH STRANDING 2: ON THE BEACH | Game audio and haptics worked |
+| Horizon Forbidden West | Game audio and haptics worked |
+
+Both results were recorded on HapticBridge 1.3.2 using Apollo, Artemis, and the Razer Kishi V2 Pro. These games have yet to be retested on the exact 1.4.0 installer build.
+
+### Controllers
+
+| Controller | Haptics status |
+| --- | --- |
+| Razer Kishi V2 Pro | Tested through Android with Artemis and Audio to Haptics |
+| Razer Kishi Ultra | Unverified |
+| Razer Kishi V3 Pro | Unverified |
+
+Controller input and haptic feedback are separate checks. If your controller or game is unlisted, use HapticBridge’s built-in haptics test to check the controller, then test audio and haptics in the game.
+
 ## Build from source
 
 Use the .NET 10 SDK on Windows x64.
