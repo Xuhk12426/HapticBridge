@@ -73,3 +73,7 @@ Run `build/portable/HapticBridge.exe` with the Windows x64 .NET 10 Desktop Runti
 The installer scripts require Inno Setup 7.1.1 and the exact staged payload described by the versioned SHA-256 manifest. A fresh local publish can differ from the release payload.
 
 First-party source is licensed under MIT. Third-party applications retain their own licenses. HapticBridge is an independent project.
+
+## Development credits
+
+HapticBridge is an AI-coded project developed using OpenAI Codex and Google Antigravity, with the original concept, development direction, hands-on testing, and validation provided by me.
