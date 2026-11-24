@@ -1,5 +1,7 @@
 # HapticBridge
 
+<img src="src/HapticBridge.UI/Assets/RazerDualSenseInstaller.png" alt="HapticBridge logo" width="160">
+
 Bring game-authored DualSense haptics from compatible Windows games to supported Android-connected controllers, such as the Razer Kishi V2 Pro, using Apollo and Artemis.
 
 Instead of deriving vibrations from the ordinary game soundtrack alone, HapticBridge lets compatible games recognize an audio-capable virtual DualSense and generate their own dedicated haptic feedback. The Android controller's Audio to Haptics feature provides the physical feedback.
