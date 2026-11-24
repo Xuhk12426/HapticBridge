@@ -47,7 +47,7 @@ HapticBridge is intended to work with Windows games that support DualSense hapti
 | DEATH STRANDING 2: ON THE BEACH | Game audio and haptics worked |
 | Horizon Forbidden West | Game audio and haptics worked |
 
-Both results were recorded on HapticBridge 1.3.2 using Apollo, Artemis, and the Razer Kishi V2 Pro. These games have yet to be retested on the exact 1.4.0 installer build.
+Both games were verified in HapticBridge 1.3.2 using Apollo, Artemis, and the Razer Kishi V2 Pro. The subsequent changes through 1.4.0 were primarily refinements and UI improvements rather than changes to the core haptics mechanism. I verified controller input and haptic feedback in the built-in testing mode on 1.4.0 instead of repeating the individual in-game tests.
 
 ### Controllers
 
