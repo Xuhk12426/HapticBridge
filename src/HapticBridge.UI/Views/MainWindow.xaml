@@ -1,0 +1,495 @@
+<Window x:Class="HapticBridge.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:core="clr-namespace:HapticBridge.Core;assembly=HapticBridge.Core"
+        Title="{x:Static core:AppBranding.Name}" Icon="../Assets/RazerDualSenseInstaller.ico"
+        Width="760" Height="670" MinWidth="590" MinHeight="500"
+        Background="#11151E" Foreground="#F1F5FC"
+        FontFamily="Segoe UI Variable Text, Segoe UI" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <SolidColorBrush x:Key="MutedText" Color="#AEBAD0" />
+        <Style x:Key="Surface" TargetType="Border" BasedOn="{StaticResource DashboardCardStyle}">
+            <Setter Property="Background" Value="#181F2C" />
+            <Setter Property="BorderBrush" Value="#303C51" />
+            <Setter Property="CornerRadius" Value="12" />
+            <Setter Property="Padding" Value="18,15" />
+        </Style>
+        <Style x:Key="SectionTitle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="17" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+        </Style>
+        <Style x:Key="Body" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource MutedText}" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+        <Style x:Key="Action" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Background" Value="#253146" />
+            <Setter Property="BorderBrush" Value="#41506A" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PathTab" TargetType="Button" BasedOn="{StaticResource Action}">
+            <Setter Property="Background" Value="#11151E" />
+            <Setter Property="Foreground" Value="{StaticResource MutedText}" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="Padding" Value="14,8" />
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5" />
+                </Trigger>
+                <DataTrigger Binding="{Binding Tag, RelativeSource={RelativeSource Self}}" Value="True">
+                    <Setter Property="Background" Value="#233655" />
+                    <Setter Property="BorderBrush" Value="#496C9E" />
+                    <Setter Property="Foreground" Value="#F1F5FC" />
+                    <Setter Property="Opacity" Value="1" />
+                    <Setter Property="AutomationProperties.ItemStatus" Value="Current path" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="OutputPicker" TargetType="ComboBox">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource KeyboardFocus}" />
+            <Setter Property="Foreground" Value="#F1F5FC" />
+            <Setter Property="Background" Value="#111925" />
+            <Setter Property="MinHeight" Value="38" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="ItemContainerStyle">
+                <Setter.Value>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="Foreground" Value="#F1F5FC" />
+                        <Setter Property="Padding" Value="10,7" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ComboBoxItem">
+                                    <Border Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter />
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#294266" />
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter Property="Background" Value="#354F74" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <ToggleButton x:Name="DropDownButton" Focusable="False"
+                                          IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}">
+                                <ToggleButton.Template>
+                                    <ControlTemplate TargetType="ToggleButton">
+                                        <Border Background="#111925" BorderBrush="#50617C" BorderThickness="1" CornerRadius="6">
+                                            <TextBlock Text="⌄" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                       Foreground="#D6E3F9" Margin="0,0,12,2" FontSize="16" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </ToggleButton.Template>
+                            </ToggleButton>
+                            <ContentPresenter IsHitTestVisible="False" VerticalAlignment="Center" Margin="11,0,34,0"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" />
+                            <Popup x:Name="PART_Popup" AllowsTransparency="True" Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}">
+                                <Border Background="#1D283A" BorderBrush="#50617C" BorderThickness="1" CornerRadius="5"
+                                        MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ScrollViewer MaxHeight="240">
+                                        <ItemsPresenter KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="DropDownButton" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <DockPanel Margin="24,16,24,16">
+        <Grid DockPanel.Dock="Top" Margin="0,0,0,14">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,12,0">
+                <Image Width="32" Height="32" Margin="0,0,10,0" RenderOptions.BitmapScalingMode="Fant">
+                    <Image.Source>
+                        <BitmapImage UriSource="../Assets/RazerDualSenseInstaller.png" DecodePixelWidth="96" />
+                    </Image.Source>
+                </Image>
+                <TextBlock Text="{x:Static core:AppBranding.Name}" FontSize="22"
+                           FontWeight="SemiBold" VerticalAlignment="Center" />
+            </StackPanel>
+            <Button Grid.Column="1" Content="Refresh" Command="{Binding RefreshCommand}"
+                    Style="{StaticResource Action}" />
+        </Grid>
+
+        <Border DockPanel.Dock="Top" BorderBrush="#303C51" BorderThickness="0,0,0,1" Margin="0,0,0,15">
+            <WrapPanel Margin="0,0,0,8">
+                <Button x:Name="ApolloTabButton" Content="Apollo" Tag="{Binding IsApollo}"
+                        Command="{Binding ShowApolloCommand}" Style="{StaticResource PathTab}" Margin="0,0,6,0" />
+                <Button x:Name="NativePathButton" Content="DualSense Haptics" Tag="{Binding IsNative}"
+                        Command="{Binding ShowNativeCommand}" Style="{StaticResource PathTab}" Margin="0,0,6,0" />
+                <Button x:Name="ExternalToolsPathButton" Content="External tools" Tag="{Binding IsExternalTools}"
+                        Command="{Binding ShowExternalToolsCommand}" ToolTipService.ShowOnDisabled="True" Margin="0,0,6,0">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource PathTab}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding ControllerSession.IsRunning}" Value="True">
+                                    <Setter Property="ToolTip" Value="Disable haptics before opening External tools." />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button x:Name="TestingPathButton" Content="Testing" Tag="{Binding IsTesting}"
+                        Command="{Binding ShowTestingCommand}" Style="{StaticResource PathTab}" Margin="0,0,6,0" />
+            </WrapPanel>
+        </Border>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <StackPanel>
+                <Border Style="{StaticResource Surface}" Padding="18,17"
+                        Visibility="{Binding IsNative, Converter={StaticResource BoolToVisConverter}}">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#203452" Offset="0" />
+                            <GradientStop Color="#181F2C" Offset="1" />
+                        </LinearGradientBrush>
+                    </Border.Background>
+                    <StackPanel>
+                        <TextBlock Text="{Binding ControllerSession.ConnectionTitle}" FontSize="25" FontWeight="SemiBold"
+                                   AutomationProperties.LiveSetting="Polite" TextWrapping="Wrap" />
+                        <TextBlock Style="{StaticResource Body}" Margin="0,5,0,3"
+                                   Text="Play compatible PC games with DualSense haptics on your Android-connected controller." />
+                        <TextBlock TextWrapping="Wrap" Foreground="#E4EEFF" AutomationProperties.LiveSetting="Polite">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="{Binding ControllerSession.Status}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding ControllerSession.HasInput}" Value="True">
+                                            <Setter Property="Text" Value="Windows is receiving controller input. Open a compatible game, or try Pulse Trail in Testing." />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <WrapPanel Margin="0,12,0,0">
+                            <Grid HorizontalAlignment="Left" Margin="0,0,8,5">
+                                <Button x:Name="ConnectDualSenseButton" Content="{Binding ConnectButtonText}"
+                                        Command="{Binding ControllerSession.StartCommand}"
+                                        ToolTip="Checks this executable’s HidHide access before enabling haptics.">
+                                    <Button.Style>
+                                        <Style TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding ControllerSession.IsRunning}" Value="True">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                                <Button x:Name="DisconnectDualSenseButton" Content="Disable haptics"
+                                        Command="{Binding ControllerSession.StopCommand}" Style="{StaticResource Action}"
+                                        Visibility="{Binding ControllerSession.IsRunning, Converter={StaticResource BoolToVisConverter}}" />
+                            </Grid>
+                            <Button x:Name="NativePrerequisitesButton" Content="Check PC setup"
+                                    Command="{Binding OpenPrerequisitesCommand}" Style="{StaticResource Action}"
+                                    Margin="0,0,0,5" ToolTip="Install the Windows tools needed for DualSense haptics." />
+                        </WrapPanel>
+                        <Expander Header="First-time setup" Foreground="#D6E3F9" Margin="0,7,0,0">
+                            <StackPanel Margin="4,6,0,0">
+                                <TextBlock Style="{StaticResource Body}" Text="1. Open the Apollo tab to set up the virtual DualShock 4 and pair Artemis." />
+                                <TextBlock Style="{StaticResource Body}" Margin="0,4" Text="2. Attach your Kishi to your Android phone. Pair Artemis with Apollo, enable Audio to Haptics on the phone, and open a stream." />
+                                <TextBlock Style="{StaticResource Body}" Text="3. Close DS4Windows, enable haptics here, and press a controller button. When connected, open your game." />
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsExternalTools, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="DS4Windows and audio routing" FontSize="25" FontWeight="SemiBold" />
+                        <TextBlock Text="Configure DS4Windows, SoundSync, VB-CABLE and Voicemeeter."
+                                   Style="{StaticResource Body}" Margin="0,5,0,6" />
+                        <TextBlock Text="Incorrect audio routing can cause missing game audio, missing haptics, or echo. Run Setup / Repair after installing the tools."
+                                   TextWrapping="Wrap" Foreground="#FCD34D" Margin="0,0,0,12" />
+                        <WrapPanel>
+                            <Button x:Name="ExternalPrerequisitesButton" Content="Install prerequisites"
+                                    Command="{Binding OpenPrerequisitesCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,5" />
+                            <Button x:Name="ExternalSetupButton" Content="Setup / Repair" Command="{Binding SetupRepairCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,5" />
+                            <Button Content="Open Voicemeeter" Command="{Binding OpenVoicemeeterCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,5" />
+                            <Button Content="Diagnostics" Command="{Binding OpenDiagnosticsCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,0,5" />
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsTesting, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="Test without a game" FontSize="25" FontWeight="SemiBold" />
+                        <TextBlock Style="{StaticResource Body}" Margin="0,5,0,12"
+                                   Text="Choose a listening output below to hear two tones on the PC. Connect your controller in DualSense Haptics to try Pulse Trail or feel the beat." />
+                        <WrapPanel>
+                            <Button x:Name="StartPulseTrailButton" Content="Start Pulse Trail"
+                                    Command="{Binding Testing.StartChallengeCommand}" Style="{StaticResource Action}" Margin="0,0,8,7" />
+                            <Button x:Name="PlaySpeakerTestButton" Content="Play speaker tones"
+                                    Command="{Binding Testing.PlaySpeakersCommand}" Style="{StaticResource Action}" Margin="0,0,8,7" />
+                            <Button x:Name="PlayDualSenseBeatButton" Content="Play DualSense beat" Command="{Binding Testing.PlayDualSenseCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,7" />
+                            <Button Content="Stop test" Command="{Binding Testing.StopCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,0,7" />
+                        </WrapPanel>
+                        <TextBlock Text="{Binding Testing.Status}" Style="{StaticResource Body}"
+                                   AutomationProperties.LiveSetting="Polite" />
+                        <ProgressBar Height="5" Margin="0,10,0,0" Minimum="0"
+                                     Maximum="{Binding Testing.CueCount, Mode=OneWay}"
+                                     Value="{Binding Testing.CompletedCues, Mode=OneWay}"
+                                     Visibility="{Binding Testing.IsChallengeActive, Converter={StaticResource BoolToVisConverter}}"
+                                     AutomationProperties.Name="Pulse Trail cues completed" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsTesting, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="Xbox and PlayStation button guide" Style="{StaticResource SectionTitle}" />
+                        <ItemsControl ItemsSource="{Binding Testing.FaceButtonGuide}" Margin="0,6,0,4">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate><UniformGrid Columns="2" /></ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding}" FontSize="15" FontWeight="SemiBold" Margin="0,3,8,3" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <Expander Header="More button mappings" Foreground="#D6E3F9" Margin="0,6,0,0">
+                            <StackPanel Margin="0,6,0,0">
+                                <TextBlock Text="LB / RB → L1 / R1" Style="{StaticResource Body}" />
+                                <TextBlock Text="LT / RT → L2 / R2" Style="{StaticResource Body}" />
+                                <TextBlock Text="Left / right stick click → L3 / R3" Style="{StaticResource Body}" />
+                                <TextBlock Text="View / Menu → Create / Options" Style="{StaticResource Body}" />
+                                <TextBlock Text="D-pad directions → Same directions" Style="{StaticResource Body}" />
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsApollo, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="Connect Artemis to this PC" FontSize="25" FontWeight="SemiBold" TextWrapping="Wrap" />
+                        <TextBlock Text="{Binding ApolloSettings.HostStatus}" FontWeight="SemiBold" TextWrapping="Wrap"
+                                   AutomationProperties.LiveSetting="Polite" Margin="0,6,0,10" />
+                        <WrapPanel>
+                            <Button Content="Start Apollo" Command="{Binding ApolloSettings.StartHostCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,6" />
+                            <Button Content="Stop Apollo" Command="{Binding ApolloSettings.StopHostCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,6" />
+                            <Button Content="Use DualShock 4" Command="{Binding ApolloSettings.ConfigureDs4Command}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,6" />
+                            <Button Content="Check PC setup" Command="{Binding OpenPrerequisitesCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,6" />
+                        </WrapPanel>
+                        <TextBlock Text="PC address for Artemis" Style="{StaticResource SectionTitle}" Margin="0,11,0,3" />
+                        <TextBlock Text="{Binding ApolloSettings.Addresses}" TextWrapping="Wrap" FontWeight="SemiBold" />
+                        <TextBlock Text="Keep your phone and PC on the same network. In Artemis, select Add PC (+) and enter the address above. If several appear, use the Wi-Fi or Ethernet address on the phone’s network."
+                                   Style="{StaticResource Body}" Margin="0,5,0,4" />
+                        <TextBlock Text="Select this PC in Artemis to get a PIN. Open Pair or manage devices to enter the PIN and check whether your phone is connected or saved."
+                                   Style="{StaticResource Body}" Margin="0,0,0,10" />
+                        <WrapPanel>
+                            <Button Content="Copy first address" Command="{Binding ApolloSettings.CopyAddressCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,6" />
+                            <Button Content="Pair or manage devices" Command="{Binding ApolloSettings.OpenPairingCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,8,6" />
+                        </WrapPanel>
+                        <TextBlock Text="{Binding ApolloSettings.ActionStatus}" Style="{StaticResource Body}"
+                                   AutomationProperties.LiveSetting="Polite" />
+                        <TextBlock Text="Once paired, start a stream in Artemis, then enable haptics and press a controller button."
+                                   Style="{StaticResource Body}" Margin="0,8,0,7" />
+                        <TextBlock Text="Controller input is reaching HapticBridge." FontWeight="SemiBold" Margin="0,0,0,7"
+                                   AutomationProperties.LiveSetting="Polite"
+                                   Visibility="{Binding ControllerSession.HasInput, Converter={StaticResource BoolToVisConverter}}" />
+                        <Button Content="Continue to DualSense Haptics" Command="{Binding ShowNativeCommand}"
+                                Style="{StaticResource Action}" HorizontalAlignment="Left" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsApollo, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="Controller + Audio" FontSize="25" FontWeight="SemiBold" />
+                        <TextBlock Text="Play on your PC display. Artemis sends controller input and receives audio without a live game feed."
+                                   Style="{StaticResource Body}" Margin="0,5,0,10" />
+                        <TextBlock Text="{Binding ApolloSettings.Status}" FontWeight="SemiBold" TextWrapping="Wrap"
+                                   AutomationProperties.LiveSetting="Polite" Margin="0,0,0,12" />
+                        <WrapPanel>
+                            <Button x:Name="ApolloAudioModeButton" Content="Configure Controller + Audio"
+                                    Command="{Binding ApolloSettings.OpenModeSettingsCommand}"
+                                    Style="{StaticResource PrimaryButtonStyle}" Margin="0,0,8,6" />
+                            <Button x:Name="ApolloWebUiButton" Content="Open Apollo web UI"
+                                    Command="{Binding ApolloSettings.OpenWebUiCommand}"
+                                    Style="{StaticResource Action}" Margin="0,0,0,6" />
+                        </WrapPanel>
+                        <Expander Header="Optional Apollo test host" Foreground="#D6E3F9" Margin="0,7,0,0">
+                            <StackPanel Margin="4,7,0,0">
+                                <TextBlock Text="Use this only if your Apollo host does not support Controller + Audio. The test host keeps its own settings and needs separate Artemis pairing."
+                                           Style="{StaticResource Body}" Margin="0,0,0,8"/>
+                                <WrapPanel>
+                                    <Button x:Name="ImportAudioHostButton" Content="Import test host ZIP" Click="ImportAudioHost_Click"
+                                            Style="{StaticResource Action}" Margin="0,0,8,6" />
+                                    <Button x:Name="StartAudioHostButton" Content="Start test host" Click="StartAudioHost_Click"
+                                            Style="{StaticResource Action}" Margin="0,0,0,6" />
+                                </WrapPanel>
+                                <TextBlock x:Name="AudioHostNotice" Style="{StaticResource Body}" AutomationProperties.LiveSetting="Polite" />
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Border>
+
+                <Border>
+                    <Border.Style>
+                        <Style TargetType="Border" BasedOn="{StaticResource Surface}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsApollo}" Value="True">
+                                    <Setter Property="Visibility" Value="Collapsed" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Border.Style>
+                    <StackPanel>
+                        <TextBlock>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource SectionTitle}">
+                                    <Setter Property="Text" Value="Game audio" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsTesting}" Value="True">
+                                            <Setter Property="Text" Value="Listening output" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding UsesExternalTools}" Value="True">
+                                            <Setter Property="Text" Value="Voicemeeter A1 output" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                        <TextBlock x:Name="ListenOnLabel" Text="Listen on" Margin="0,10,0,5" />
+                        <ComboBox x:Name="ListeningDevicePicker" ItemsSource="{Binding PhysicalAudioDevices}"
+                                  SelectedItem="{Binding SelectedAudioDevice}" IsEnabled="{Binding CanSelectAudioOutput}"
+                                  AutomationProperties.LabeledBy="{Binding ElementName=ListenOnLabel}"
+                                  DisplayMemberPath="FriendlyName" Style="{StaticResource OutputPicker}" />
+                        <DockPanel Margin="0,10,0,3">
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding ListeningVolumeText}" />
+                            <TextBlock x:Name="ListeningVolumeLabel" Text="Listening volume" />
+                        </DockPanel>
+                        <Slider x:Name="ListeningVolumeSlider" Minimum="0" Maximum="100"
+                                SmallChange="1" LargeChange="10" TickFrequency="1" IsSnapToTickEnabled="True"
+                                Value="{Binding ListeningVolume, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                IsEnabled="{Binding CanAdjustListeningVolume}" IsMoveToPointEnabled="True"
+                                AutomationProperties.LabeledBy="{Binding ElementName=ListeningVolumeLabel}">
+                            <Slider.Style>
+                                <Style TargetType="Slider">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding UsesNativeAudio}" Value="True">
+                                            <Setter Property="ToolTip" Value="Windows volume for the selected speakers or headphones." />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Slider.Style>
+                        </Slider>
+                        <TextBlock Text="{Binding AudioOutputStatus}" Style="{StaticResource Body}"
+                                   Margin="0,5,0,0" AutomationProperties.LiveSetting="Polite" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsTesting, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <TextBlock Text="Controller input" Style="{StaticResource SectionTitle}" />
+                        <TextBlock Style="{StaticResource Body}" Margin="0,5,0,6"
+                                   Text="Enable haptics in the DualSense Haptics tab. The virtual controller stays connected while you test here." />
+                        <TextBlock Text="{Binding ControllerSession.Status}" Style="{StaticResource Body}" />
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsNative, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <DockPanel LastChildFill="True">
+                            <Button x:Name="DashboardHidHideButton" DockPanel.Dock="Right" Content="Repair access"
+                                    Command="{Binding RepairHidHideCommand}" Style="{StaticResource Action}"
+                                    VerticalAlignment="Center" Margin="12,0,0,0"
+                                    AutomationProperties.Name="Repair HidHide access" />
+                            <StackPanel>
+                                <TextBlock Text="Controller access (HidHide)" Style="{StaticResource SectionTitle}" />
+                                <TextBlock Text="{Binding HidHideStatus}" Style="{StaticResource Body}"
+                                           AutomationProperties.LiveSetting="Polite" Margin="0,3,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                        <Expander Header="Detected devices" Foreground="#D6E3F9" Margin="0,10,0,0">
+                            <StackPanel Margin="0,5,0,0">
+                                <TextBlock Text="{Binding ControllerMainStatus}" FontWeight="SemiBold" />
+                                <TextBlock Text="{Binding ControllerSubtitle}" Style="{StaticResource Body}" />
+                                <TextBlock Text="{Binding ControllerSession.Status}" Style="{StaticResource Body}" Margin="0,4,0,0" />
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Border>
+
+                <Border Style="{StaticResource Surface}"
+                        Visibility="{Binding IsExternalTools, Converter={StaticResource BoolToVisConverter}}">
+                    <StackPanel>
+                        <DockPanel Margin="0,0,0,7">
+                            <TextBlock DockPanel.Dock="Right" Text="{Binding SystemStatusText}"
+                                       Foreground="{Binding SystemStatusHealth, Converter={StaticResource HealthBrushConverter}}" />
+                            <TextBlock Text="External components" Style="{StaticResource SectionTitle}" />
+                        </DockPanel>
+                        <ItemsControl ItemsSource="{Binding SystemComponents}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <Border BorderBrush="#303C51" BorderThickness="0,1,0,0" Padding="0,8">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel Margin="0,0,12,0">
+                                                <TextBlock Text="{Binding Name}" FontWeight="SemiBold" />
+                                                <TextBlock Text="{Binding Details}" Style="{StaticResource Body}" />
+                                            </StackPanel>
+                                            <TextBlock Grid.Column="1" Text="{Binding StatusText}" VerticalAlignment="Center"
+                                                       Foreground="{Binding Health, Converter={StaticResource HealthBrushConverter}}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Window>

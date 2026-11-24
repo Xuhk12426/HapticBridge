@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <AssemblyName>HapticBridge</AssemblyName>
+    <RootNamespace>HapticBridge.UI</RootNamespace>
+    <Product>$(AssemblyName)</Product>
+    <AssemblyTitle>$(AssemblyName)</AssemblyTitle>
+    <Description>DualSense haptics for compatible controllers on Windows.</Description>
+    <Copyright>Copyright (c) 2026 HapticBridge contributors</Copyright>
+    <ApplicationIcon>Assets\RazerDualSenseInstaller.ico</ApplicationIcon>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
+    <LangVersion>13.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\RazerDualSenseInstaller.ico" />
+    <Resource Include="Assets\RazerDualSenseInstaller.png" />
+    <Using Remove="System.Drawing" />
+    <Using Remove="System.Windows.Forms" />
+    <InternalsVisibleTo Include="HapticBridge.Tests" />
+    <ProjectReference Include="..\HapticBridge.Core\HapticBridge.Core.csproj" />
+    <ProjectReference Include="..\HapticBridge.Audio\HapticBridge.Audio.csproj" />
+    <ProjectReference Include="..\HapticBridge.Integrations\HapticBridge.Integrations.csproj" />
+    <ProjectReference Include="..\HapticBridge.Setup\HapticBridge.Setup.csproj" />
+  </ItemGroup>
+</Project>

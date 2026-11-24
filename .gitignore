@@ -1,0 +1,8 @@
+**/bin/
+**/obj/
+.cache/
+.tools/
+build/
+release/
+*.user
+*.log

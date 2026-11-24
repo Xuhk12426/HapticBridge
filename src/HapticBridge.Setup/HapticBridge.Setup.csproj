@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>13.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="HapticBridge.Tests" />
+    <ProjectReference Include="..\HapticBridge.Core\HapticBridge.Core.csproj" />
+    <ProjectReference Include="..\HapticBridge.Audio\HapticBridge.Audio.csproj" />
+    <ProjectReference Include="..\HapticBridge.Integrations\HapticBridge.Integrations.csproj" />
+  </ItemGroup>
+</Project>

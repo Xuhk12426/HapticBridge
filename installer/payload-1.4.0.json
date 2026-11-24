@@ -1,0 +1,62 @@
+[
+  {
+    "path": "HapticBridge.Audio.dll",
+    "sha256": "855f63a99d2503a378987d69aa58a49ed7c03bf587f41cfc9fdf37619dfa9006"
+  },
+  {
+    "path": "HapticBridge.Core.dll",
+    "sha256": "68a8fcde33cddb7e315da0beb15db8089b2de6d37ef7b4e5ff961487e789ead2"
+  },
+  {
+    "path": "HapticBridge.deps.json",
+    "sha256": "12eee9d87024f351e4e8f0740519efbad1d891aa2565f6311d87180124fd34e3"
+  },
+  {
+    "path": "HapticBridge.dll",
+    "sha256": "1a32159c4fcd6975e5b05d0e496a91fcf6e13816873ee11f3988be02b3445980"
+  },
+  {
+    "path": "HapticBridge.exe",
+    "sha256": "98979689d09ae7a4f2cbbb8faaa4ba58bae56f97e430bdc05bd5774815b3cffd"
+  },
+  {
+    "path": "HapticBridge.Integrations.dll",
+    "sha256": "282fb35f190ac6e2bc5cb96b538b7bebfc0b610858134de3c6f821e94d382837"
+  },
+  {
+    "path": "HapticBridge.runtimeconfig.json",
+    "sha256": "96bc2946dff8790400d652ec7f8de7bb043e954980d59470c112788b68a1fbd3"
+  },
+  {
+    "path": "HapticBridge.Setup.dll",
+    "sha256": "c88c218f2198289c5d54561875f47a75a0ce0c254aab53221a5e039f25739891"
+  },
+  {
+    "path": "LICENSE",
+    "sha256": "f431b8c436f3a2b0e692af84e177a4d4d226f66e5155a4ad809e4f2356a89b1c"
+  },
+  {
+    "path": "licenses/dotnet-LICENSE.txt",
+    "sha256": "7f6839a61ce892b79c6549e2dc5a81fdbd240a0b260f8881216b45b7fda8b45d"
+  },
+  {
+    "path": "licenses/dotnet-THIRD-PARTY-NOTICES.txt",
+    "sha256": "deb4427a295e1ed474b0d81c5a0d972c1b550b9a715cda939cdfa9236b1b418f"
+  },
+  {
+    "path": "licenses/System.Management-LICENSE.txt",
+    "sha256": "d7a68596ab69b06f51ca278a6545148e4269a9381c26d597c13df5d88e08cf5b"
+  },
+  {
+    "path": "licenses/System.Management-THIRD-PARTY-NOTICES.txt",
+    "sha256": "40686c6447a7d5b5d3693068e4571b5f483d7ed335aeee773ef662440de4c5d5"
+  },
+  {
+    "path": "README.txt",
+    "sha256": "5ff61b69113d89010db8f7f4923800c0e8a03d69cd339a704a02373d6a607ef4"
+  },
+  {
+    "path": "System.Management.dll",
+    "sha256": "bf04bcc219ae25e50ef590edd42a43c44369eb4a2e73e5d8c6f4b41b225608d9"
+  }
+]

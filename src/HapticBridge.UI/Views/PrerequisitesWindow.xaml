@@ -1,0 +1,111 @@
+<Window x:Class="HapticBridge.UI.Views.PrerequisitesWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:setup="clr-namespace:HapticBridge.Setup.Prerequisites;assembly=HapticBridge.Setup"
+        Title="{Binding Title}" Height="660" Width="660" MinHeight="485" MinWidth="510"
+        Background="{StaticResource BgBrush}" Foreground="{StaticResource TextPrimaryBrush}"
+        FontFamily="Segoe UI Variable Text, Segoe UI" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <Style x:Key="SetupAction" TargetType="Button" BasedOn="{StaticResource SecondaryButtonStyle}">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45" /></Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid Margin="22">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <StackPanel Margin="0,0,0,12">
+            <TextBlock Text="{Binding Title}" FontSize="23" FontWeight="SemiBold" />
+            <TextBlock Text="Install missing tools from their official sources. Existing installations stay in place. Windows may ask for administrator approval or a restart."
+                       TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}" Margin="0,5,0,8" />
+            <TextBlock x:Name="PrerequisiteStatusText" Text="{Binding Status}" TextWrapping="Wrap" FontWeight="SemiBold"
+                       AutomationProperties.LiveSetting="Polite" />
+            <ProgressBar Height="3" Margin="0,7,0,0" IsIndeterminate="{Binding IsBusy}"
+                         Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisConverter}}"
+                         AutomationProperties.Name="Prerequisite setup progress" />
+        </StackPanel>
+
+        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+            <ItemsControl x:Name="PrerequisiteList" ItemsSource="{Binding Items}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource DashboardCardStyle}" Padding="12,9">
+                            <StackPanel>
+                                <DockPanel LastChildFill="True">
+                                    <TextBlock Text="{Binding Status}" DockPanel.Dock="Right" Margin="8,1,0,0"
+                                               FontWeight="SemiBold">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="{StaticResource TextSecondaryBrush}" />
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding State}" Value="{x:Static setup:PrerequisiteState.Installed}">
+                                                        <Setter Property="Foreground" Value="#86EFAC" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding State}" Value="{x:Static setup:PrerequisiteState.Missing}">
+                                                        <Setter Property="Foreground" Value="#93C5FD" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding State}" Value="{x:Static setup:PrerequisiteState.NeedsAttention}">
+                                                        <Setter Property="Foreground" Value="#FCD34D" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding State}" Value="{x:Static setup:PrerequisiteState.RestartRequired}">
+                                                        <Setter Property="Foreground" Value="#FCD34D" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Text="{Binding Name}" FontSize="15" FontWeight="SemiBold" TextWrapping="Wrap" />
+                                </DockPanel>
+                                <TextBlock Text="{Binding Detail}" TextWrapping="Wrap" Margin="0,4,0,3"
+                                           Foreground="{StaticResource TextSecondaryBrush}" />
+                                <TextBlock Foreground="{StaticResource TextSecondaryBrush}">
+                                    <Run Text="Setup package " /><Run Text="{Binding Version, Mode=OneWay}" />
+                                    <Run Text="  ·  " />
+                                    <Hyperlink Command="{Binding DataContext.OpenSourceCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                               CommandParameter="{Binding Source}" Foreground="#93C5FD">
+                                        <Run Text="Vendor page" />
+                                    </Hyperlink>
+                                </TextBlock>
+                            </StackPanel>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <StackPanel Grid.Row="2" Margin="0,11,0,0">
+            <TextBlock Text="{Binding NextSteps}" TextWrapping="Wrap" Foreground="{StaticResource TextSecondaryBrush}"
+                       Margin="0,0,0,10" />
+            <WrapPanel>
+                <Button x:Name="InstallMissingButton" Content="Install missing" Command="{Binding InstallCommand}"
+                        Margin="0,0,8,5" IsDefault="True">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
+                            <Style.Triggers>
+                                <Trigger Property="IsEnabled" Value="False"><Setter Property="Opacity" Value="0.45" /></Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+                <Button Content="Check again" Command="{Binding CheckCommand}" Style="{StaticResource SetupAction}" Margin="0,0,8,5" />
+                <Button Content="Open SoundSync" Command="{Binding OpenSoundSyncCommand}" Style="{StaticResource SetupAction}"
+                        Visibility="{Binding IsExternal, Converter={StaticResource BoolToVisConverter}}" Margin="0,0,8,5" />
+                <Button Content="Stop setup" Command="{Binding StopCommand}" Style="{StaticResource SetupAction}"
+                        Visibility="{Binding IsInstalling, Converter={StaticResource BoolToVisConverter}}" Margin="0,0,8,5" />
+                <Button Content="Close" Click="Close_Click" IsCancel="True" Margin="0,0,0,5">
+                    <Button.Style>
+                        <Style TargetType="Button" BasedOn="{StaticResource SetupAction}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsBusy}" Value="True"><Setter Property="IsEnabled" Value="False" /></DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </WrapPanel>
+        </StackPanel>
+    </Grid>
+</Window>

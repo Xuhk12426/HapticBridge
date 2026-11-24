@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <OutputType>Exe</OutputType>
+    <EnableMSTestRunner>true</EnableMSTestRunner>
+    <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+    <UseWPF>true</UseWPF>
+    <LangVersion>13.0</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.8.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\HapticBridge.Core\HapticBridge.Core.csproj" />
+    <ProjectReference Include="..\..\src\HapticBridge.Audio\HapticBridge.Audio.csproj" />
+    <ProjectReference Include="..\..\src\HapticBridge.Integrations\HapticBridge.Integrations.csproj" />
+    <ProjectReference Include="..\..\src\HapticBridge.Setup\HapticBridge.Setup.csproj" />
+    <ProjectReference Include="..\..\src\HapticBridge.UI\HapticBridge.UI.csproj" />
+  </ItemGroup>
+</Project>

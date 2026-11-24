@@ -1,0 +1,17 @@
+HapticBridge @APP_VERSION@ for Windows x64
+
+Start HapticBridge from the Start menu. Select Check PC setup to review missing Windows tools. Each vendor's installer may ask for administrator approval or a restart. Pair your phone in Artemis and follow First-time setup in the app. The optional Controller + Audio build of Apollo is a separate test host.
+
+Repair the desktop app by closing it and running the same HapticBridge setup again. Use the original installation folder. Setup restores the desktop files. External tools and their profiles have their own setup and repair controls in the app.
+
+Moving or removing the app
+HapticBridge installs for everyone on this PC in the Windows Program Files folder. Windows asks for administrator approval. To remove it, open Installed apps and uninstall HapticBridge. Shared tools, drivers, profiles and each user's backups stay with their owners. Your portable copy remains separate.
+
+HidHide identifies the full executable path. After a move, use Repair access and enable in the new copy if prompted. Before uninstalling, review any access you previously granted to the exact installed @APP_EXE@ in the HidHide configuration client. In normal list mode, remove only the entry you added for this copy. In inverse mode the list has the opposite meaning. Consult the pre-repair snapshot before changing an entry. Keep entries for other working copies. An unused allowed path should be reviewed before another executable is placed there.
+
+Configuration recovery
+Open %LOCALAPPDATA%\HapticBridge\backups in File Explorer to review or keep a private copy. If you no longer need a backup, delete only that backup yourself. Backups and diagnostic logs may contain device names and local paths.
+
+Before undoing a configuration repair, compare the backup with the current settings and the changes you approved. Restore only those fields. Stop the owning app before editing its files. For Voicemeeter, save your current preset before loading an older preset. Windows speaker volume and mute are shared settings and can be adjusted in Windows. Reinstalling HapticBridge does not reset them.
+
+If installation stops, close the desktop app and rerun the same setup. If setup reports an unregistered Program Files folder, preserve it and have an administrator move it aside before retrying. Keep the last working installer or portable copy. To deliberately downgrade, uninstall the newer desktop app first. Setup logs are in the installer account's Windows temporary folder under Setup Log*.txt. Review logs before sharing.
