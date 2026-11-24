@@ -4,6 +4,8 @@ HapticBridge brings DualSense haptics from compatible Windows games to supported
 
 ## Compatibility
 
+HapticBridge should work with any Windows game that supports DualSense haptics and any Razer Kishi controller with advanced haptics that supports Audio to Haptics on Android. The tables below show what we’ve verified so far.
+
 ### Games
 
 | Windows game | Hands-on result |
