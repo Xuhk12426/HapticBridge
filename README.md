@@ -1,10 +1,44 @@
 # HapticBridge
 
-HapticBridge brings DualSense haptics from compatible Windows games to supported Android controllers using Apollo and Artemis. See the [project page](https://xuhk12426.github.io/HapticBridge/) for setup and compatibility information.
+Bring game-authored DualSense haptics from compatible Windows games to supported Android-connected controllers, such as the Razer Kishi V2 Pro, using Apollo and Artemis.
+
+Instead of deriving vibrations from the ordinary game soundtrack alone, HapticBridge lets compatible games recognize an audio-capable virtual DualSense and generate their own dedicated haptic feedback. The Android controller's Audio to Haptics feature provides the physical feedback.
+
+**[Download HapticBridge](https://github.com/Xuhk12426/HapticBridge/releases) · [Project website](https://xuhk12426.github.io/HapticBridge/)**
+
+## How it works
+
+### DualSense Haptics (native path, recommended)
+
+HapticBridge 1.4.0 manages the controller relay and PC listening audio directly, replacing much of the original external-tools workflow.
+
+- Apollo and Artemis forward controller input from Android to a virtual DualShock 4 on the PC.
+- HapticBridge reads that controller's HID input and relays it directly to VIIPER, which presents an audio-capable virtual USB DualSense to Windows.
+- Compatible games generate their DualSense feedback through the virtual controller. HapticBridge automatically sets the virtual DualSense audio endpoint volume to maximum.
+- HapticBridge receives the DualSense speaker PCM and uses Windows WASAPI to play it through the selected PC speakers or headphones.
+- Enable Audio to Haptics on the Android device to experience feedback through the supported controller.
+
+The native path does not require Voicemeeter Banana, VB-CABLE, SoundSync, or a running DS4Windows process. The matching VIIPER backend and its USB/IP driver are still required; they are provided through the supported DS4Windows distribution.
+
+### External tools (alternative path)
+
+The original workflow is also available for users who need it. It uses DS4Windows with VIIPER for virtual DualSense emulation, Voicemeeter Banana and VB-CABLE for audio routing, and SoundSync to deliver the haptic audio to Android.
+
+## Getting started
+
+1. Download and install HapticBridge from the GitHub releases page.
+2. Open **Check PC setup** and follow the prompts to install or verify the required dependencies.
+3. Start Apollo, pair Artemis on your Android device, attach your controller, and enable Audio to Haptics.
+4. Start a stream in Artemis. Close DS4Windows if it is running, then open **DualSense Haptics** in HapticBridge, enable haptics, and press a controller button.
+5. Run the built-in haptics test before starting a compatible game.
+
+For playing on the PC display without streaming game visuals, the optional Controller + Audio mode requires a compatible Apollo host build.
+
+Windows 11 x64 is the primary target. A separate Windows 10 22H2 x64 compatibility test build is available. I have also verified installation, setup, and working haptics with 1.4.0 on an Intel Mac running Windows through Boot Camp.
 
 ## Compatibility
 
-HapticBridge should work with any Windows game that supports DualSense haptics and any Razer Kishi controller with advanced haptics that supports Audio to Haptics on Android. The tables below show what I’ve verified so far.
+HapticBridge is intended to work with Windows games that support DualSense haptics and Razer Kishi controllers with advanced haptics and Audio to Haptics support on Android. The tables below show what I’ve verified so far; untested combinations are not guaranteed.
 
 ### Games
 
