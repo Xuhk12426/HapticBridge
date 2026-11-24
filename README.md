@@ -77,3 +77,30 @@ First-party source is licensed under MIT. Third-party applications retain their 
 ## Development credits
 
 HapticBridge is an AI-coded project developed using OpenAI Codex and Google Antigravity, with the original concept, development direction, hands-on testing, and validation provided by me.
+
+### Third-party projects and acknowledgments
+
+HapticBridge would not be possible without the work of these projects and their developers.
+
+**Controller emulation and streaming**
+
+- [Apollo](https://github.com/ClassicOldSong/Apollo) and [Artemis](https://github.com/ClassicOldSong/moonlight-android) — streaming and controller input, built on the work of the Sunshine and Moonlight communities.
+- [DS4Windows (hbashton fork)](https://github.com/hbashton/DS4Windows) — controller emulation and distribution of the VIIPER backend; thanks also to the original DS4Windows developers and contributors.
+- [VIIPER](https://dualsenseclient.github.io/VIIPER/) — virtual USB controller emulation, including audio-capable DualSense devices.
+- [ViGEmBus](https://github.com/nefarius/ViGEmBus) — virtual gamepad driver used by Apollo.
+- [usbip-win2](https://github.com/nefarius/usbip-win2) — Windows USB/IP driver used by VIIPER.
+- [HidHide](https://github.com/nefarius/HidHide) — controller visibility and access management.
+
+**External-tools path**
+
+- [SoundSync](https://github.com/sugumar247/SoundSync) — audio streaming to Android.
+- [Voicemeeter Banana](https://vb-audio.com/Voicemeeter/banana.htm) and [VB-CABLE](https://vb-audio.com/Cable/) by VB-Audio — audio routing and virtual audio cable.
+
+**Development and installation**
+
+- [.NET](https://github.com/dotnet/runtime), [WPF](https://github.com/dotnet/wpf), and [System.Management](https://www.nuget.org/packages/System.Management) — Windows application framework and system integration.
+- [Inno Setup](https://jrsoftware.org/isinfo.php) — Windows installer creation.
+- Microsoft Visual C++ Redistributable — runtime required by the controller tools.
+- Razer — Audio to Haptics support on compatible controllers.
+
+Thanks to the maintainers and contributors of these projects and their upstream dependencies. These acknowledgments include open-source projects as well as separately licensed third-party software; each retains its own license and terms. HapticBridge is not affiliated with or endorsed by these projects or vendors.
