@@ -30,9 +30,20 @@ The original workflow is also available for users who need it. It uses DS4Window
 
 1. Download and install HapticBridge from the GitHub releases page.
 2. Open **Check PC setup** and follow the prompts to install or verify the required dependencies.
-3. Start Apollo, pair Artemis on your Android device, attach your controller, and enable Audio to Haptics.
-4. Start a stream in Artemis. Close DS4Windows if it is running, then open **DualSense Haptics** in HapticBridge, enable haptics, and press a controller button.
+3. Start Apollo on your PC and complete the **Android setup** below.
+4. Start a stream in Artemis (launched through Razer Cortex). Close DS4Windows if it is running, then open **DualSense Haptics** in HapticBridge, enable haptics, and press a controller button.
 5. Run the built-in haptics test before starting a compatible game.
+
+### Android setup (Razer Kishi)
+
+1. Install Razer Cortex and Artemis on your Android device.
+2. Enable **USB OTG (On-The-Go)** in your Android settings if your phone requires it and it is not already enabled. Some devices enable OTG automatically.
+3. Connect your compatible Razer Kishi controller to your phone.
+4. Open **Razer Cortex** and enable **Audio to Haptics** for your controller.
+5. Add Artemis to the Razer Cortex game launcher if it is not already listed, then launch **Artemis from within Razer Cortex**, rather than directly from the Android home screen.
+6. Pair Artemis with your Apollo host if needed, then start your stream. Keep Audio to Haptics enabled while playing.
+
+If your controller is not detected, check that OTG is still enabled and reconnect the controller. If controller input works but haptics do not, check that Audio to Haptics is enabled and that you launched Artemis through Razer Cortex, then run HapticBridge's built-in haptics test.
 
 For playing on the PC display without streaming game visuals, the optional Controller + Audio mode requires a compatible Apollo host build.
 
